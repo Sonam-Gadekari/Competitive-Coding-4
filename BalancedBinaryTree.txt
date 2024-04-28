@@ -1,0 +1,38 @@
+Time Complexity: O(n)
+Space Complexity: O(h): Stack Space
+Challenges: To come with return value -1, 0. To identify we have to return maximum of left and right.
+Approach: Traverse through all sub trees using recursion to calculate if they are balanced or now. 
+Height is always max of left and right sub tree +1; If root has null values return.
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(root==null) return true;
+        return helper(root)==-1? false: true;
+    }
+
+    public int helper(TreeNode root){
+        //base condition.
+        if(root==null) return 0;
+        int left=helper(root.left);
+        int right=helper(root.right);
+        if(left==-1 || right==-1)  return -1;        
+        if(Math.abs(left-right)>1){
+            return -1;
+        }
+        return Math.max(left, right)+1;
+    }
+}

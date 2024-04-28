@@ -1,0 +1,49 @@
+Time complexity: O(n)
+Space complexity: O(1)
+Challenges: Identify the mid point and set the first pointer end to null. Doing it in case of even and odd input scenario.
+Approach: Use slow and fast pointer technique . When fast pointer reaches end of the list, slow pointer reaches half of the way.
+Reverse the half traversed slow pointer, that way we traverse only O(n/2) length. Reverse half of the list.Check reversed array and actual array and 
+compare each element starting from initial position.If values are not equal then return false.
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }        
+        //1,2,3,2,1                        
+        ListNode reversed=reverse(slow);        
+        if(fast==null)slow=null;
+        else slow.next=null;
+        fast=head;
+        while(reversed!=null){
+            if(fast.val!=reversed.val) return false;
+            fast=fast.next;
+            reversed=reversed.next;
+        }
+        return true;
+    }
+
+    public ListNode reverse(ListNode root){
+        System.out.println(root.val);
+        ListNode node=null;
+        while(root!=null){
+            ListNode temp=new ListNode(root.val);
+            temp.next=node;
+            node=temp;            
+            root=root.next;
+        }
+        return node;
+    }
+}
